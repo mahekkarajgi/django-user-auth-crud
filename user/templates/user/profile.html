@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="mb-4">My Profile</h2>
+        <div class="card">
+            <div class="card-body">
+                {% if profile.avatar %}
+                    <img src="{{ profile.avatar.url }}" class="rounded-circle mb-3" width="100" height="100" alt="Avatar">
+                {% endif %}
+                <p><strong>Username:</strong> {{ profile.user.username }}</p>
+                <p><strong>Email:</strong> {{ profile.user.email }}</p>
+                <p><strong>Bio:</strong> {{ profile.bio|default:"—" }}</p>
+                <p><strong>Phone:</strong> {{ profile.phone|default:"—" }}</p>
+                <p><strong>Address:</strong> {{ profile.address|default:"—" }}</p>
+                <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

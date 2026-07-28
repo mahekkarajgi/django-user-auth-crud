@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Items{% endblock %}
+{% block content %}
+<h2 class="mb-3">My Items</h2>
+<a href="{% url 'item_create' %}" class="btn btn-primary mb-3">+ Add New Item</a>
+
+{% if items %}
+<table class="table table-bordered bg-white">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Created</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.title }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.created_at|date:"M d, Y H:i" }}</td>
+            <td>
+                <a href="{% url 'item_update' item.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                <form method="post" action="{% url 'item_delete' item.pk %}" class="d-inline" onsubmit="return confirm('Delete this item?');">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No items yet. Add one above.</p>
+{% endif %}
+{% endblock %}
